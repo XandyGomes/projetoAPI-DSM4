@@ -2,7 +2,7 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
-// import Main from "./pages/main";
+import Main from "./pages/main";
 import Login from "./pages/login";
 // import User from "./pages/user";
 
@@ -27,7 +27,7 @@ export default function Routes() {
             },
           }}
         />
-        {/* <Stack.Screen
+        <Stack.Screen
           name="main"
           component={Main}
           options={{
@@ -41,7 +41,7 @@ export default function Routes() {
               color: "#fff",
             },
           }}
-        /> */}
+        />
         {/* <Stack.Screen
           name="user"
           component={User}

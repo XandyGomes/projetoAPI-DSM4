@@ -32,6 +32,7 @@ export const SubmitButton = styled(RectButton)`
   border-radius: 5px;
   margin-left: 10px;
   padding: 0 12px;
+  opacity: ${(props) => (props.loading ? 0.7 : 1)};
 `;
 
 export const List = styled.FlatList.attrs({
@@ -86,4 +87,5 @@ export const ProfileButtonText = styled.Text`
   color: #fff;
   text-transform: uppercase;
 `;
+
 
