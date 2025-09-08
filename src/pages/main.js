@@ -56,12 +56,14 @@ export default class Main extends Component {
         bio: response.data.bio,
         avatar: response.data.avatar_url,
       };
+      console.log(data)
+      
       this.setState({
         users: [...users, data],
         newUser: "",
         loading: false,
       });
-
+      
       Keyboard.dismiss();
     } catch (error) {
       alert("Usuário não encontrado!");
@@ -91,6 +93,23 @@ export default class Main extends Component {
             )}
           </SubmitButton>
         </Form>
+        <List
+           data = {users}
+           keyExtractor={(user) => user.login}
+           renderItem={({item}) => (
+            <User>
+              <Avatar source = {{uri : item.avatar}}/>
+              <Name>{item.name}</Name>
+              <Bio>{item.bio}</Bio>
+              <ProfileButton onPress={() => {
+                this.props.navigation.navigate('user', {user: item})
+              }}>
+                <ProfileButtonText>Ver perfil</ProfileButtonText>
+              </ProfileButton>
+
+            </User>
+           )}
+        />
       </Container>
     );
   }
