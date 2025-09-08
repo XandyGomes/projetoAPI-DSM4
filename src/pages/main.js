@@ -16,7 +16,6 @@ import {
   ProfileButton,
   ProfileButtonText,
 } from "../styles";
-
 export default class Main extends Component {
   state = {
     newUser: "",
@@ -42,28 +41,25 @@ export default class Main extends Component {
     try {
       const { users, newUser } = this.state;
       this.setState({ loading: true });
-
       const response = await api.get(`/users/${newUser}`);
       if (users.find((user) => user.login === response.data.login)) {
-        alert("Usuário já adicionado");
+        alert("Usuário já adicionado!");
         this.setState({ loading: false });
         return;
       }
-
       const data = {
         name: response.data.name,
         login: response.data.login,
         bio: response.data.bio,
         avatar: response.data.avatar_url,
       };
-      console.log(data)
-      
+      console.log(data);
+
       this.setState({
         users: [...users, data],
         newUser: "",
         loading: false,
       });
-      
       Keyboard.dismiss();
     } catch (error) {
       alert("Usuário não encontrado!");
@@ -79,7 +75,7 @@ export default class Main extends Component {
           <Input
             autoCorrect={false}
             autoCapitalize="none"
-            placeholder="Adicionar Usuário"
+            placeholder="Adicionar usuário"
             value={newUser}
             onChangeText={(text) => this.setState({ newUser: text })}
             returnKeyType="send"
@@ -94,21 +90,33 @@ export default class Main extends Component {
           </SubmitButton>
         </Form>
         <List
-           data = {users}
-           keyExtractor={(user) => user.login}
-           renderItem={({item}) => (
+          showsVerticalScrollIndicator={false}
+          data={users}
+          keyExtractor={(user) => user.login}
+          renderItem={({ item }) => (
             <User>
-              <Avatar source = {{uri : item.avatar}}/>
+              <Avatar source={{ uri: item.avatar }} />
               <Name>{item.name}</Name>
               <Bio>{item.bio}</Bio>
-              <ProfileButton onPress={() => {
-                this.props.navigation.navigate('user', {user: item})
-              }}>
+              <ProfileButton
+                onPress={() => {
+                  this.props.navigation.navigate("user", { user: item });
+                }}
+              >
                 <ProfileButtonText>Ver perfil</ProfileButtonText>
               </ProfileButton>
-
+              <ProfileButton
+                onPress={() => {
+                  this.setState({
+                    users: users.filter((user) => user.login !== item.login),
+                  });
+                }}
+                style={{ backgroundColor: "#FFC0CB" }}
+              >
+                <ProfileButtonText>Remover</ProfileButtonText>
+              </ProfileButton>
             </User>
-           )}
+          )}
         />
       </Container>
     );
