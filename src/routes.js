@@ -42,7 +42,7 @@ export default function Routes() {
             },
           }}
         />
-        {/* <Stack.Screen
+        <Stack.Screen
           name="user"
           component={User}
           options={{
@@ -56,7 +56,7 @@ export default function Routes() {
               color: "#fff",
             },
           }}
-        /> */}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
