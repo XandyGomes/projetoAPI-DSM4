@@ -4,23 +4,33 @@ import {
   View,
   Text,
   TextInput,
-  Alert,
   TouchableOpacity,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
 
-  const handleLogin = () => {
-    if (email === "" || password === "") {
-      navigation.navigate("main");
-    } else {
-      Alert.alert("E-mail ou senha inválidos!");
+  const handleLogin = async () => {
+    const user = await AsyncStorage.getItem("user")
+    if(!user){
+      alert("Nenhum usuário cadastro")
+      return
+    }
+    const userJson = JSON.parse(user)
+    if(userJson.email === email && userJson.password === password){
+      navigation.navigate("main")
+    }else{
+      alert("E-mail ou senha inválidos!")
     }
   };
+
+  const handleCadastro = () => {
+    navigation.navigate('cadastro')
+  }
 
   return (
     <View style={styles.container}>
@@ -39,6 +49,9 @@ const Login = () => {
       />
       <TouchableOpacity style={styles.button} onPress={handleLogin}>
         <Text style={styles.buttonText}>Entrar</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={handleCadastro}>
+        <Text style={styles.buttonText}>Cadastrar</Text>
       </TouchableOpacity>
     </View>
   );
